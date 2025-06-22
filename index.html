@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>生徒会長選挙 ボートマッチ</title>
   <style>
     body {
@@ -19,7 +19,7 @@
       padding: 1em;
       margin: 1em auto;
       border-radius: 10px;
-      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
       max-width: 700px;
     }
     .options label {
@@ -40,8 +40,7 @@
     .result {
       display: none;
       text-align: center;
-      font-weight: bold;
-      font-size: 1.2em;
+      font-size: 1.1em;
       color: #333;
       margin-top: 2em;
       max-width: 700px;
@@ -50,7 +49,23 @@
       background: #fff;
       padding: 1em;
       border-radius: 10px;
-      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    }
+    .bar-container {
+      background-color: #eee;
+      border-radius: 5px;
+      overflow: hidden;
+      height: 25px;
+      margin: 0.5em 0;
+    }
+    .bar {
+      height: 100%;
+      background-color: #4CAF50;
+      text-align: right;
+      padding-right: 0.5em;
+      color: white;
+      line-height: 25px;
+      white-space: nowrap;
     }
   </style>
 </head>
@@ -101,34 +116,44 @@
 
     function calculateMatch() {
       const answers = [];
-
       for (let i = 1; i <= questions.length; i++) {
         const options = document.getElementsByName(`q${i}`);
         let selected = null;
-
         for (const opt of options) {
           if (opt.checked) {
             selected = parseInt(opt.value);
             break;
           }
         }
-
         if (selected === null) {
           alert(`${i}番目の質問に答えてください。`);
           return;
         }
-
         answers.push(selected);
       }
 
-      let resultText = "<h2>診断結果</h2>";
-      parties.forEach(party => {
+      // 一致度計算
+      let scores = parties.map(party => {
         let score = 0;
         for (let i = 0; i < answers.length; i++) {
           score += 2 - Math.abs(answers[i] - party.values[i]);
         }
         const percent = Math.round((score / (questions.length * 2)) * 100);
-        resultText += `<p>${party.name}：${percent}% 一致</p>`;
+        return { name: party.name, percent };
+      });
+
+      // 一致度の高い順にソート
+      scores.sort((a, b) => b.percent - a.percent);
+
+      // 結果表示
+      let resultText = "<h2>診断結果</h2>";
+      scores.forEach(party => {
+        resultText += `
+          <p>${party.name}：${party.percent}%</p>
+          <div class=\"bar-container\">
+            <div class=\"bar\" style=\"width: ${party.percent}%\">${party.percent}%</div>
+          </div>
+        `;
       });
 
       const resultBox = document.getElementById("resultBox");
