@@ -49,120 +49,71 @@
 <body>
   <h1>あなたにぴったりの生徒会政党は？</h1>
   <form id="voteMatch">
-
-    <!-- 設問1～11 -->
-    <div class="question"><p>1. いじめの解決は重要な問題である。</p>
-      <div class="options">
-        <label><input type="radio" name="q1" value="2"> 賛成</label>
-        <label><input type="radio" name="q1" value="1"> どちらともいえない</label>
-        <label><input type="radio" name="q1" value="0"> 反対</label>
-      </div>
-    </div>
-    <div class="question"><p>2. いじめの根本原因はすべて加害者側にある。</p>
-      <div class="options">
-        <label><input type="radio" name="q2" value="2"> 賛成</label>
-        <label><input type="radio" name="q2" value="1"> どちらともいえない</label>
-        <label><input type="radio" name="q2" value="0"> 反対</label>
-      </div>
-    </div>
-    <div class="question"><p>3. いじめ問題は、いじめられる側にも原因がある。</p>
-      <div class="options">
-        <label><input type="radio" name="q3" value="2"> 賛成</label>
-        <label><input type="radio" name="q3" value="1"> どちらともいえない</label>
-        <label><input type="radio" name="q3" value="0"> 反対</label>
-      </div>
-    </div>
-    <div class="question"><p>4. すべての生徒は部活動に所属し、全国大会優勝を目指すべきである。</p>
-      <div class="options">
-        <label><input type="radio" name="q4" value="2"> 賛成</label>
-        <label><input type="radio" name="q4" value="1"> どちらともいえない</label>
-        <label><input type="radio" name="q4" value="0"> 反対</label>
-      </div>
-    </div>
-    <div class="question"><p>5. 学校は、将来、ビジネスの世界で役に立つ学びを充実化させるべきである。</p>
-      <div class="options">
-        <label><input type="radio" name="q5" value="2"> 賛成</label>
-        <label><input type="radio" name="q5" value="1"> どちらともいえない</label>
-        <label><input type="radio" name="q5" value="0"> 反対</label>
-      </div>
-    </div>
-    <div class="question"><p>6. 授業が面白くない原因は、すべて教師にある。</p>
-      <div class="options">
-        <label><input type="radio" name="q6" value="2"> 賛成</label>
-        <label><input type="radio" name="q6" value="1"> どちらともいえない</label>
-        <label><input type="radio" name="q6" value="0"> 反対</label>
-      </div>
-    </div>
-    <div class="question"><p>7. 授業を改善する努力をしない教師にはペナルティを課すべきである。</p>
-      <div class="options">
-        <label><input type="radio" name="q7" value="2"> 賛成</label>
-        <label><input type="radio" name="q7" value="1"> どちらともいえない</label>
-        <label><input type="radio" name="q7" value="0"> 反対</label>
-      </div>
-    </div>
-    <div class="question"><p>8. 学園祭の来場者数が減少していることは問題である。</p>
-      <div class="options">
-        <label><input type="radio" name="q8" value="2"> 賛成</label>
-        <label><input type="radio" name="q8" value="1"> どちらともいえない</label>
-        <label><input type="radio" name="q8" value="0"> 反対</label>
-      </div>
-    </div>
-    <div class="question"><p>9. 時代の価値観にそぐわない校則は改正すべきである。</p>
-      <div class="options">
-        <label><input type="radio" name="q9" value="2"> 賛成</label>
-        <label><input type="radio" name="q9" value="1"> どちらともいえない</label>
-        <label><input type="radio" name="q9" value="0"> 反対</label>
-      </div>
-    </div>
-    <div class="question"><p>10. 制服を見直すか、廃止すべきである。</p>
-      <div class="options">
-        <label><input type="radio" name="q10" value="2"> 賛成</label>
-        <label><input type="radio" name="q10" value="1"> どちらともいえない</label>
-        <label><input type="radio" name="q10" value="0"> 反対</label>
-      </div>
-    </div>
-    <div class="question"><p>11. 学生食堂のメニューを充実化し、すべて無料にすべきである。</p>
-      <div class="options">
-        <label><input type="radio" name="q11" value="2"> 賛成</label>
-        <label><input type="radio" name="q11" value="1"> どちらともいえない</label>
-        <label><input type="radio" name="q11" value="0"> 反対</label>
-      </div>
-    </div>
-
+    <div id="questions"></div>
     <button type="button" onclick="calculateMatch()">診断結果を見る</button>
   </form>
-
   <div class="result" id="resultBox"></div>
 
   <script>
-    const parties = [
-      { name: \"輝かしい学園生活を推進する党\", values: [0,0,2,2,0,0,0,0,0,0,0] },
-      { name: \"イノベーションを促進する党\", values: [2,2,0,0,2,0,0,0,1,2,0] },
-      { name: \"生徒の人権を守る党\", values: [1,2,2,0,2,2,2,0,2,2,2] },
-      { name: \"アオハルしか勝たん党\", values: [1,2,2,0,0,2,2,0,2,2,2] }
+    const questions = [
+      "いじめの解決は重要な問題である。",
+      "いじめの根本原因はすべて加害者側にある。",
+      "いじめ問題は、いじめられる側にも原因がある。",
+      "すべての生徒は部活動に所属し、全国大会優勝を目指すべきである。",
+      "学校は、将来、ビジネスの世界で役に立つ学びを充実化させるべきである。",
+      "授業が面白くない原因は、すべて教師にある。",
+      "授業を改善する努力をしない教師にはペナルティを課すべきである。",
+      "学園祭の来場者数が減少していることは問題である。",
+      "時代の価値観にそぐわない校則は改正すべきである。",
+      "制服を見直すか、廃止すべきである。",
+      "学生食堂のメニューを充実化し、すべて無料にすべきである。"
     ];
 
+    const parties = [
+      { name: "輝かしい学園生活を推進する党", values: [0,0,2,2,0,0,0,0,0,0,0] },
+      { name: "イノベーションを促進する党", values: [2,2,0,0,2,0,0,0,1,2,0] },
+      { name: "生徒の人権を守る党", values: [1,2,2,0,2,2,2,0,2,2,2] },
+      { name: "アオハルしか勝たん党", values: [1,2,2,0,0,2,2,0,2,2,2] }
+    ];
+
+    const container = document.getElementById("questions");
+    questions.forEach((q, i) => {
+      const div = document.createElement("div");
+      div.className = "question";
+      div.innerHTML = `<p>${i + 1}. ${q}</p>
+        <div class="options">
+          <label><input type="radio" name="q${i + 1}" value="2"> 賛成</label>
+          <label><input type="radio" name="q${i + 1}" value="1"> どちらともいえない</label>
+          <label><input type="radio" name="q${i + 1}" value="0"> 反対</label>
+        </div>`;
+      container.appendChild(div);
+    });
+
     function calculateMatch() {
-      const form = document.forms[\"voteMatch\"];
-      let answers = [];
-      for (let i = 1; i <= 11; i++) {
+      const form = document.forms["voteMatch"];
+      const answers = [];
+      for (let i = 1; i <= questions.length; i++) {
         const val = form[`q${i}`].value;
         if (!val) {
-          alert(`${i}番目の質問に答えてください`);
+          alert(`${i}番目の質問に答えてください。`);
           return;
         }
         answers.push(parseInt(val));
       }
 
-      let scores = parties.map(party => {
-        return answers.reduce((sum, ans, idx) => sum + (2 - Math.abs(ans - party.values[idx])), 0);
+      let resultText = "";
+      parties.forEach(party => {
+        let score = 0;
+        for (let i = 0; i < answers.length; i++) {
+          score += 2 - Math.abs(answers[i] - party.values[i]);
+        }
+        const percent = Math.round((score / (questions.length * 2)) * 100);
+        resultText += `<p>${party.name}：${percent}% 一致</p>`;
       });
 
-      let maxScore = Math.max(...scores);
-      let best = parties.filter((p, i) => scores[i] === maxScore).map(p => p.name);
-
-      document.getElementById(\"resultBox\").style.display = \"block\";
-      document.getElementById(\"resultBox\").innerText = `あなたに最も近い政党は「${best.join('、')}」です！`;
+      const resultBox = document.getElementById("resultBox");
+      resultBox.innerHTML = resultText;
+      resultBox.style.display = "block";
     }
   </script>
 </body>
